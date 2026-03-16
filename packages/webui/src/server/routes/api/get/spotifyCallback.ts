@@ -21,7 +21,8 @@ const handler: ApiHandler["handler"] = async (req, res) => {
 	// Reconstruct the same redirect URI used during login
 	const protocol = req.headers["x-forwarded-proto"] || req.protocol || "http";
 	const host = req.headers["x-forwarded-host"] || req.headers.host;
-	const redirectUri = `${protocol}://127.0.0.1:${PORT}/api/spotifyCallback`;
+	const port = String(host).split(":")[1] || "6595";
+	const redirectUri = `${protocol}://127.0.0.1:${port}/api/spotifyCallback`;
 
 	try {
 		await spotify.handleAuthCallback(code as string, redirectUri, state as string);
