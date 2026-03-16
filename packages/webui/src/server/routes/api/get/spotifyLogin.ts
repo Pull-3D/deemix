@@ -14,7 +14,8 @@ const handler: ApiHandler["handler"] = (req, res) => {
 	// Build redirect URI from the current request origin
 	const protocol = req.headers["x-forwarded-proto"] || req.protocol || "http";
 	const host = req.headers["x-forwarded-host"] || req.headers.host;
-	const redirectUri = `${protocol}://127.0.0.1:${PORT}/api/spotifyCallback`;
+	const port = String(host).split(":")[1] || "6595";
+	const redirectUri = `${protocol}://127.0.0.1:${port}/api/spotifyCallback`;
 
 	const authUrl = spotify.getAuthUrl(redirectUri);
 	res.redirect(authUrl);
